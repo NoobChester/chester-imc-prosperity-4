@@ -32,8 +32,8 @@ Selected points from the output:
 - Total alloc 0%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
 - Total alloc 1%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
 - ...
-- Total alloc 30%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
-- Total alloc 31%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
+- Total alloc 30%: best = 9% R 21% Sc, PnL at min Sp = -331, PnL at max Sp = 117014
+- Total alloc 31%: best = 9% R, 22% Sc, min speed PnL = -133, max speed PnL = 122801
 - Total alloc 32%: best = 9% R, 23% Sc, min speed PnL = 65, max speed PnL = 128587
 - Total alloc 33%: best = 9% R, 24% Sc, min speed PnL = 263, max speed PnL = 134374
 - ...
