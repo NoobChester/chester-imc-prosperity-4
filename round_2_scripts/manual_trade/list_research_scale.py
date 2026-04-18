@@ -54,7 +54,6 @@ def pnl(research: int, scale: int, speed: float) -> int:
     return int(research_outcome(research) * scale_outcome(scale) * speed - budget_used(research, scale))
 
 def main() -> None:
-
     step = 1
     for research_scale_sum_max in range(0, 101, step):
         best_max_speed_pnl = result(0, 0, -TOTAL_BUDGET, -TOTAL_BUDGET)
@@ -69,7 +68,7 @@ def main() -> None:
                     best_max_speed_pnl = result(research, scale, current_max_speed_pnl, current_min_speed_pnl)
                 if current_min_speed_pnl > best_min_speed_pnl.min_speed_pnl:
                     best_min_speed_pnl = result(research, scale, current_max_speed_pnl, current_min_speed_pnl)
-        print(f"Given max = {research_scale_sum_max}%, best alloc = {best_min_speed_pnl.research_percentage}% R {best_min_speed_pnl.scale_percentage}% S, PnL at min speed = {best_min_speed_pnl.min_speed_pnl}, PnL at max speed = {best_min_speed_pnl.max_speed_pnl}")
+        print(f"Given R and Sc alloc = {research_scale_sum_max}%, best alloc = {best_min_speed_pnl.research_percentage}% R {best_min_speed_pnl.scale_percentage}% Sc, PnL at min Sp = {best_min_speed_pnl.min_speed_pnl}, PnL at max Sp = {best_min_speed_pnl.max_speed_pnl}")
 
 if __name__ == "__main__":
     main()
