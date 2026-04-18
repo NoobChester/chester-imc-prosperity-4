@@ -89,10 +89,10 @@ Best R alloc = 5%, best Sc alloc = 11%, PnL = 3809
 
 Conclusion:
 - Based on this analysis, there is likely more teams who place below 50% than above 50%, some teams would also use this strategy and try to invest 51% to beat the rest.
-- Therefore I will invest 52% on speed.
+- You get the same speed for people you tie with, so 51% is sufficient for me.
 
 ## 4. Solution
 ```bash
-> python pnl.py 52 0.5
-Best R alloc = 13%, best Sc alloc = 35%, PnL = 90097
+> python pnl.py 51 0.5
+Best R alloc = 13%, best Sc alloc = 36%, PnL = 94100
 ```
