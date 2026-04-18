@@ -51,6 +51,10 @@ Assumption:
 
 - Spend all remaining budget and still receive min speed.
 
+```bash
+py list_research_scale_worst_case.py
+```
+
 Selected points:
 
 - Total alloc 32%: best = 9% R, 23% Sc, min speed PnL = -33934
@@ -67,3 +71,28 @@ Conclusion:
 
 - If speed spend exceeds about 26% (so research+scale is below about 74%), min-speed PnL can become negative.
 - This does not prove speed spend is always bad, because speed spend can improve rank and therefore increase speed multiplier.
+
+## 4. Game Theory Analysis
+
+```bash
+> python pnl.py 85 0.9
+Best R alloc = 5%, best Sc alloc = 10%, PnL = -1082
+```
+```bash
+> python pnl.py 84 0.9
+Best R alloc = 5%, best Sc alloc = 11%, PnL = 3809
+```
+
+
+- It can be seen that anything above 85% allocation on speed results in negative gain, the only reason for doing this would be to sabotage other teams, it can be assumed that a small amount of teams would be doing this.
+- It can be assumed that many teams would try and get a guaranteed profit by investing very little on speed.
+
+Conclusion:
+- Based on this analysis, there is likely more teams who place below 50% than above 50%, some teams would also use this strategy and try to invest 51% to beat the rest.
+- Therefore I will invest 52% on speed.
+
+## 4. Solution
+```bash
+> python pnl.py 52 0.5
+Best R alloc = 13%, best Sc alloc = 35%, PnL = 90097
+```
