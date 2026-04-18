@@ -1,69 +1,69 @@
-## **Findings from manual trade scripts**
+# Findings from Manual Trade Scripts
 
+## 1. Baseline optimization
+
+Command:
+
+```bash
 py optimize_research_scale.py
+```
 
-Best max Sp PnL:
-Research = 23%
-Scale = 77%
-PnL at max speed = 618096
-PnL at min speed = 24232
+Best result (both max-speed and min-speed objective runs produced the same allocation):
 
-Best min speed PnL:
-Research = 23%
-Scale = 77%
-PnL at max speed = 618096
-PnL at min speed = 24232
+- Research: 23%
+- Scale: 77%
+- PnL at max speed: 618096
+- PnL at min speed: 24232
 
-### We can infer that if we spend 0 on speed, 23 and 77 is the best way to spend on research and scale.
+Conclusion:
 
-### We further expand the previous code:
+- If speed allocation is 0%, the best split between research and scale is 23% / 77%.
 
+## 2. Sweep over total (Research + Scale) allocation
+
+Command:
+
+```bash
 py list_research_scale.py
+```
 
-Given R and Sc alloc = 0%, best alloc = 0% R 0% Sc, PnL at min Sp = 0, PnL at max Sp = 0
+Selected points from the output:
 
-Given R and Sc alloc = 1%, best alloc = 0% R 0% Sc, PnL at min Sp = 0, PnL at max Sp = 0
+- Total alloc 0%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
+- Total alloc 1%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
+- ...
+- Total alloc 30%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
+- Total alloc 31%: best = 0% R, 0% Sc, min speed PnL = 0, max speed PnL = 0
+- Total alloc 32%: best = 9% R, 23% Sc, min speed PnL = 65, max speed PnL = 128587
+- Total alloc 33%: best = 9% R, 24% Sc, min speed PnL = 263, max speed PnL = 134374
+- ...
+- Total alloc 99%: best = 23% R, 76% Sc, min speed PnL = 23768, max speed PnL = 609920
+- Total alloc 100%: best = 23% R, 77% Sc, min speed PnL = 24232, max speed PnL = 618096
 
-...
+Observed trend:
 
-Given R and Sc alloc = 30%, best alloc = 0% R 0% Sc, PnL at min Sp = 0, PnL at max Sp = 0
+- Increasing total allocation to research+scale improves PnL in this model.
+- Results suggest little value in allocating more than about 68% to speed under these assumptions.
 
-Given R and Sc alloc = 31%, best alloc = 0% R 0% Sc, PnL at min Sp = 0, PnL at max Sp = 0
+## 3. Worst-case variant
 
-Given R and Sc alloc = 32%, best alloc = 9% R 23% Sc, PnL at min Sp = 65, PnL at max Sp = 128587
+Assumption:
 
-Given R and Sc alloc = 33%, best alloc = 9% R 24% Sc, PnL at min Sp = 263, PnL at max Sp = 134374
+- Spend all remaining budget and still receive min speed.
 
-...
+Selected points:
 
-Given R and Sc alloc = 99%, best alloc = 23% R 76% Sc, PnL at min Sp = 23768, PnL at max Sp = 609920
+- Total alloc 32%: best = 9% R, 23% Sc, min speed PnL = -33934
+- Total alloc 33%: best = 9% R, 24% Sc, min speed PnL = -33236
+- ...
+- Total alloc 72%: best = 18% R, 54% Sc, min speed PnL = -1767
+- Total alloc 73%: best = 18% R, 55% Sc, min speed PnL = -874
+- Total alloc 74%: best = 18% R, 56% Sc, min speed PnL = 19
+- Total alloc 75%: best = 18% R, 57% Sc, min speed PnL = 912
+- Total alloc 99%: best = 23% R, 76% Sc, min speed PnL = 23268
+- Total alloc 100%: best = 23% R, 77% Sc, min speed PnL = 24232
 
-Given R and Sc alloc = 100%, best alloc = 23% R 77% Sc, PnL at min Sp = 24232, PnL at max Sp = 618096
+Conclusion:
 
-### We can infer that the more we allocate on research and speed, the better, as it outgrows the budget.
-
-### We can also infer that it is never worth it to spend any more than 68% on speed.
-
-### However let's assume the worst case, we spend all the rest of our budget and still get min speed:
-
-Given R and Sc alloc = 32%, best alloc = 9% R 23% Sc, PnL at min Sp = -33934
-
-Given R and Sc alloc = 33%, best alloc = 9% R 24% Sc, PnL at min Sp = -33236
-
-...
-
-Given R and Sc alloc = 72%, best alloc = 18% R 54% Sc, PnL at min Sp = -1767
-
-Given R and Sc alloc = 73%, best alloc = 18% R 55% Sc, PnL at min Sp = -874
-
-Given R and Sc alloc = 74%, best alloc = 18% R 56% Sc, PnL at min Sp = 19
-
-Given R and Sc alloc = 75%, best alloc = 18% R 57% Sc, PnL at min Sp = 912
-
-Given R and Sc alloc = 99%, best alloc = 23% R 76% Sc, PnL at min Sp = 23268
-
-Given R and Sc alloc = 100%, best alloc = 23% R 77% Sc, PnL at min Sp = 24232
-
-### If we spend more than 26% on speed, we risk getting negative PnL.
-
-### However that does not mean we it is never worth it, we have not considered the increase in speed.
+- If speed spend exceeds about 26% (so research+scale is below about 74%), min-speed PnL can become negative.
+- This does not prove speed spend is always bad, because speed spend can improve rank and therefore increase speed multiplier.
