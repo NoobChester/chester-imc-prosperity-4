@@ -68,7 +68,7 @@ def main() -> None:
                     best_max_speed_pnl = result(research, scale, current_max_speed_pnl, current_min_speed_pnl)
                 if current_min_speed_pnl > best_min_speed_pnl.min_speed_pnl:
                     best_min_speed_pnl = result(research, scale, current_max_speed_pnl, current_min_speed_pnl)
-        print(f"Given R and Sc alloc = {research_scale_sum_max}%, best alloc = {best_min_speed_pnl.research_percentage}% R {best_min_speed_pnl.scale_percentage}% Sc, PnL at min Sp = {best_min_speed_pnl.min_speed_pnl}, PnL at max Sp = {best_min_speed_pnl.max_speed_pnl}")
+        print(f"Given R and Sc alloc = {research_scale_sum_max}%, best alloc = {best_max_speed_pnl.research_percentage}% R {best_max_speed_pnl.scale_percentage}% Sc, PnL at min Sp = {best_max_speed_pnl.min_speed_pnl}, PnL at max Sp = {best_max_speed_pnl.max_speed_pnl}")
 
 if __name__ == "__main__":
     main()
